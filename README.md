@@ -3,8 +3,8 @@ zcashrpcclient
 
 [![Build Status](https://travis-ci.org/arithmetric/zcashrpcclient.png?branch=master)]
 (https://travis-ci.org/arithmetric/zcashrpcclient)
-[![GoDoc](https://godoc.org/github.com/arithmetric/zcashrpcclient?status.png)]
-(http://godoc.org/github.com/arithmetric/zcashrpcclient)
+[![GoDoc](https://godoc.org/github.com/wallnutkraken/zcashrpcclient?status.png)]
+(http://godoc.org/github.com/wallnutkraken/zcashrpcclient)
 
 zcashrpcclient implements a Zcash JSON-RPC client package written in
 [Go](http://golang.org/). It provides a robust and easy to use

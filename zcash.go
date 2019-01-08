@@ -8,8 +8,8 @@ package zcashrpcclient
 import (
 	"encoding/json"
 
-	"github.com/arithmetric/zcashrpcclient/zcashjson"
 	"github.com/btcsuite/btcutil"
+	"github.com/wallnutkraken/zcashrpcclient/zcashjson"
 )
 
 // ***************************
