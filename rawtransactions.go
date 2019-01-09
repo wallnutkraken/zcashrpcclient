@@ -9,6 +9,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
+	"fmt"
 
 	"github.com/btcsuite/btcd/btcjson"
 	"github.com/btcsuite/btcd/chaincfg/chainhash"
@@ -219,7 +220,7 @@ func (r FutureCreateRawTransactionResult) Receive() (string, error) {
 	if err != nil {
 		return "", err
 	}
-
+	fmt.Printf("Res: [%s] txHex: [%s]", string(res), string(txHex))
 	// Decode the serialized transaction hex to raw bytes.
 	return txHex, nil
 }
