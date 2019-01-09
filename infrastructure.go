@@ -15,6 +15,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	l "log"
 	"math"
 	"net"
 	"net/http"
@@ -875,6 +876,7 @@ func (c *Client) sendCmd(cmd interface{}) chan *response {
 	if err != nil {
 		return newFutureError(err)
 	}
+	l.Printf("marshalledJSON [%s] method [%s]", marshalledJSON, method)
 
 	// Generate the request and send it along with a channel to respond on.
 	responseChan := make(chan *response, 1)
