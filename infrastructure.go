@@ -893,13 +893,13 @@ func (c *Client) sendCmd(cmd interface{}) chan *response {
 }
 
 type signtxreq struct {
-	Ver    string   `json:"jsonrpc"`
-	ID     string   `json:"id"`
-	Method string   `json:"method"`
-	Params []string `json:"params"`
+	Ver    string        `json:"jsonrpc"`
+	ID     string        `json:"id"`
+	Method string        `json:"method"`
+	Params []interface{} `json:"params"`
 }
 
-func (c *Client) sendSignCmd(tx string) chan *response {
+func (c *Client) sendSignCmd(tx string, wif string) chan *response {
 	// // Get the method associated with the command.
 	// method, err := btcjson.CmdMethod(cmd)
 	// if err != nil {
@@ -916,7 +916,7 @@ func (c *Client) sendSignCmd(tx string) chan *response {
 		Ver:    "1.0",
 		ID:     "zcrc",
 		Method: "signrawtransaction",
-		Params: []string{tx},
+		Params: []interface{}{tx, []string{}, wif},
 	})
 	if err != nil {
 		return newFutureError(err)

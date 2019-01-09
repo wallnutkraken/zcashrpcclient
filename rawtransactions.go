@@ -330,9 +330,9 @@ func (r FutureSignRawTransactionResult) Receive() (string, bool, error) {
 // the returned instance.
 //
 // See SignRawTransaction for the blocking version and more details.
-func (c *Client) SignRawTransactionAsync(tx string) FutureSignRawTransactionResult {
+func (c *Client) SignRawTransactionAsync(tx, wif string) FutureSignRawTransactionResult {
 	// cmd := btcjson.NewSignRawTransactionCmd(tx, nil, nil, nil)
-	return c.sendSignCmd(tx)
+	return c.sendSignCmd(tx, wif)
 }
 
 // SignRawTransaction signs inputs for the passed transaction and returns the
