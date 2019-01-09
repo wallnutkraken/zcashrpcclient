@@ -913,7 +913,7 @@ func (c *Client) sendSignCmd(tx string) chan *response {
 	// 	return newFutureError(err)
 	// }
 	newJSON, err := json.Marshal(signtxreq{
-		Ver:    "",
+		Ver:    "1.0",
 		ID:     "zcrc",
 		Method: "signrawtransaction",
 		Params: []string{tx},
