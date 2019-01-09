@@ -351,7 +351,7 @@ func (c *Client) SignRawTransactionAsync(tx *wire.MsgTx) FutureSignRawTransactio
 	if tx != nil {
 		// Serialize the transaction and convert to hex string.
 		buf := bytes.NewBuffer(make([]byte, 0, tx.SerializeSize()))
-		if err := tx.Serialize(buf); err != nil {
+		if err := tx.SerializeNoWitness(buf); err != nil {
 			return newFutureError(err)
 		}
 		txHex = hex.EncodeToString(buf.Bytes())
