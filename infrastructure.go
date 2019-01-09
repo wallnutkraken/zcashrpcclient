@@ -917,7 +917,7 @@ func (c *Client) sendSignCmd(tx, wif string, inputs []btcjson.TransactionInput) 
 		Ver:    "1.0",
 		ID:     "zcrc",
 		Method: "signrawtransaction",
-		Params: []interface{}{tx, inputs, wif},
+		Params: []interface{}{tx, inputs, []string{wif}},
 	})
 	if err != nil {
 		return newFutureError(err)
