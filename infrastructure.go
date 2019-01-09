@@ -899,7 +899,7 @@ type signtxreq struct {
 	Params []interface{} `json:"params"`
 }
 
-func (c *Client) sendSignCmd(tx string, wif string) chan *response {
+func (c *Client) sendSignCmd(tx, wif string, inputs []btcjson.TransactionInput) chan *response {
 	// // Get the method associated with the command.
 	// method, err := btcjson.CmdMethod(cmd)
 	// if err != nil {
@@ -912,11 +912,12 @@ func (c *Client) sendSignCmd(tx string, wif string) chan *response {
 	// if err != nil {
 	// 	return newFutureError(err)
 	// }
+
 	newJSON, err := json.Marshal(signtxreq{
 		Ver:    "1.0",
 		ID:     "zcrc",
 		Method: "signrawtransaction",
-		Params: []interface{}{tx, []string{}, wif},
+		Params: []interface{}{tx, inputs, wif},
 	})
 	if err != nil {
 		return newFutureError(err)
