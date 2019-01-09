@@ -329,18 +329,8 @@ func (r FutureSignRawTransactionResult) Receive() (string, bool, error) {
 // the returned instance.
 //
 // See SignRawTransaction for the blocking version and more details.
-func (c *Client) SignRawTransactionAsync(tx *wire.MsgTx) FutureSignRawTransactionResult {
-	txHex := ""
-	if tx != nil {
-		// Serialize the transaction and convert to hex string.
-		buf := bytes.NewBuffer(make([]byte, 0, tx.SerializeSize()))
-		if err := tx.SerializeNoWitness(buf); err != nil {
-			return newFutureError(err)
-		}
-		txHex = hex.EncodeToString(buf.Bytes())
-	}
-
-	cmd := btcjson.NewSignRawTransactionCmd(txHex, nil, nil, nil)
+func (c *Client) SignRawTransactionAsync(tx string) FutureSignRawTransactionResult {
+	cmd := btcjson.NewSignRawTransactionCmd(tx, nil, nil, nil)
 	return c.sendCmd(cmd)
 }
 
@@ -351,7 +341,7 @@ func (c *Client) SignRawTransactionAsync(tx *wire.MsgTx) FutureSignRawTransactio
 // private keys for the passed transaction which needs to be signed and uses the
 // default signature hash type.  Use one of the SignRawTransaction# variants to
 // specify that information if needed.
-func (c *Client) SignRawTransaction(tx *wire.MsgTx) (string, bool, error) {
+func (c *Client) SignRawTransaction(tx string) (string, bool, error) {
 	return c.SignRawTransactionAsync(tx).Receive()
 }
 
@@ -360,18 +350,8 @@ func (c *Client) SignRawTransaction(tx *wire.MsgTx) (string, bool, error) {
 // function on the returned instance.
 //
 // See SignRawTransaction2 for the blocking version and more details.
-func (c *Client) SignRawTransaction2Async(tx *wire.MsgTx, inputs []btcjson.RawTxInput) FutureSignRawTransactionResult {
-	txHex := ""
-	if tx != nil {
-		// Serialize the transaction and convert to hex string.
-		buf := bytes.NewBuffer(make([]byte, 0, tx.SerializeSize()))
-		if err := tx.SerializeNoWitness(buf); err != nil {
-			return newFutureError(err)
-		}
-		txHex = hex.EncodeToString(buf.Bytes())
-	}
-
-	cmd := btcjson.NewSignRawTransactionCmd(txHex, &inputs, nil, nil)
+func (c *Client) SignRawTransaction2Async(tx string, inputs []btcjson.RawTxInput) FutureSignRawTransactionResult {
+	cmd := btcjson.NewSignRawTransactionCmd(tx, &inputs, nil, nil)
 	return c.sendCmd(cmd)
 }
 
@@ -385,7 +365,7 @@ func (c *Client) SignRawTransaction2Async(tx *wire.MsgTx, inputs []btcjson.RawTx
 //
 // See SignRawTransaction if the RPC server already knows the input
 // transactions.
-func (c *Client) SignRawTransaction2(tx *wire.MsgTx, inputs []btcjson.RawTxInput) (string, bool, error) {
+func (c *Client) SignRawTransaction2(tx string, inputs []btcjson.RawTxInput) (string, bool, error) {
 	return c.SignRawTransaction2Async(tx, inputs).Receive()
 }
 
@@ -394,21 +374,11 @@ func (c *Client) SignRawTransaction2(tx *wire.MsgTx, inputs []btcjson.RawTxInput
 // function on the returned instance.
 //
 // See SignRawTransaction3 for the blocking version and more details.
-func (c *Client) SignRawTransaction3Async(tx *wire.MsgTx,
+func (c *Client) SignRawTransaction3Async(tx string,
 	inputs []btcjson.RawTxInput,
 	privKeysWIF []string) FutureSignRawTransactionResult {
 
-	txHex := ""
-	if tx != nil {
-		// Serialize the transaction and convert to hex string.
-		buf := bytes.NewBuffer(make([]byte, 0, tx.SerializeSize()))
-		if err := tx.SerializeNoWitness(buf); err != nil {
-			return newFutureError(err)
-		}
-		txHex = hex.EncodeToString(buf.Bytes())
-	}
-
-	cmd := btcjson.NewSignRawTransactionCmd(txHex, &inputs, &privKeysWIF,
+	cmd := btcjson.NewSignRawTransactionCmd(tx, &inputs, &privKeysWIF,
 		nil)
 	return c.sendCmd(cmd)
 }
@@ -430,7 +400,7 @@ func (c *Client) SignRawTransaction3Async(tx *wire.MsgTx,
 // See SignRawTransaction if the RPC server already knows the input
 // transactions and private keys or SignRawTransaction2 if it already knows the
 // private keys.
-func (c *Client) SignRawTransaction3(tx *wire.MsgTx,
+func (c *Client) SignRawTransaction3(tx string,
 	inputs []btcjson.RawTxInput,
 	privKeysWIF []string) (string, bool, error) {
 
@@ -442,21 +412,11 @@ func (c *Client) SignRawTransaction3(tx *wire.MsgTx,
 // function on the returned instance.
 //
 // See SignRawTransaction4 for the blocking version and more details.
-func (c *Client) SignRawTransaction4Async(tx *wire.MsgTx,
+func (c *Client) SignRawTransaction4Async(tx string,
 	inputs []btcjson.RawTxInput, privKeysWIF []string,
 	hashType SigHashType) FutureSignRawTransactionResult {
 
-	txHex := ""
-	if tx != nil {
-		// Serialize the transaction and convert to hex string.
-		buf := bytes.NewBuffer(make([]byte, 0, tx.SerializeSize()))
-		if err := tx.SerializeNoWitness(buf); err != nil {
-			return newFutureError(err)
-		}
-		txHex = hex.EncodeToString(buf.Bytes())
-	}
-
-	cmd := btcjson.NewSignRawTransactionCmd(txHex, &inputs, &privKeysWIF,
+	cmd := btcjson.NewSignRawTransactionCmd(tx, &inputs, &privKeysWIF,
 		btcjson.String(string(hashType)))
 	return c.sendCmd(cmd)
 }
@@ -480,7 +440,7 @@ func (c *Client) SignRawTransaction4Async(tx *wire.MsgTx,
 // desired.  Otherwise, see SignRawTransaction if the RPC server already knows
 // the input transactions and private keys, SignRawTransaction2 if it already
 // knows the private keys, or SignRawTransaction3 if it does not know both.
-func (c *Client) SignRawTransaction4(tx *wire.MsgTx,
+func (c *Client) SignRawTransaction4(tx string,
 	inputs []btcjson.RawTxInput, privKeysWIF []string,
 	hashType SigHashType) (string, bool, error) {
 
