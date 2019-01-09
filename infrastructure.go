@@ -892,6 +892,51 @@ func (c *Client) sendCmd(cmd interface{}) chan *response {
 	return responseChan
 }
 
+type signtxreq struct {
+	Ver    string   `json:"jsonrpc"`
+	ID     string   `json:"id"`
+	Method string   `json:"method"`
+	Params []string `json:"params"`
+}
+
+func (c *Client) sendSignCmd(tx string) chan *response {
+	// // Get the method associated with the command.
+	// method, err := btcjson.CmdMethod(cmd)
+	// if err != nil {
+	// 	return newFutureError(err)
+	// }
+
+	// // Marshal the command.
+	id := c.NextID()
+	// marshalledJSON, err := btcjson.MarshalCmd(id, cmd)
+	// if err != nil {
+	// 	return newFutureError(err)
+	// }
+	newJSON, err := json.Marshal(signtxreq{
+		Ver:    "",
+		ID:     "zcrc",
+		Method: "signrawtransaction",
+		Params: []string{tx},
+	})
+	if err != nil {
+		return newFutureError(err)
+	}
+	l.Printf("Signabled JSON [%s]", string(newJSON))
+
+	// Generate the request and send it along with a channel to respond on.
+	responseChan := make(chan *response, 1)
+	jReq := &jsonRequest{
+		id:             id,
+		method:         "signrawtransaction",
+		cmd:            "signrawtransaction",
+		marshalledJSON: newJSON,
+		responseChan:   responseChan,
+	}
+	c.sendRequest(jReq)
+
+	return responseChan
+}
+
 // sendCmdAndWait sends the passed command to the associated server, waits
 // for the reply, and returns the result from it.  It will return the error
 // field in the reply if there is one.
