@@ -342,8 +342,8 @@ func (c *Client) SignRawTransactionAsync(tx, wif string) FutureSignRawTransactio
 // private keys for the passed transaction which needs to be signed and uses the
 // default signature hash type.  Use one of the SignRawTransaction# variants to
 // specify that information if needed.
-func (c *Client) SignRawTransaction(tx string) (string, bool, error) {
-	return c.SignRawTransactionAsync(tx).Receive()
+func (c *Client) SignRawTransaction(tx, wif string) (string, bool, error) {
+	return c.SignRawTransactionAsync(tx, wif).Receive()
 }
 
 // SignRawTransaction2Async returns an instance of a type that can be used to
