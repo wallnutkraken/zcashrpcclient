@@ -911,7 +911,6 @@ func (c *Client) sendSignCmd(tx, wif, scriptPub string, inputs []btcjson.Transac
 	// if err != nil {
 	// 	return newFutureError(err)
 	// }
-
 	// // Marshal the command.
 	id := c.NextID()
 	// marshalledJSON, err := btcjson.MarshalCmd(id, cmd)
