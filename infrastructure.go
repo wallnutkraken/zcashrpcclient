@@ -916,7 +916,7 @@ func (c *Client) sendSignCmd(tx string, wif string) chan *response {
 		Ver:    "1.0",
 		ID:     "zcrc",
 		Method: "signrawtransaction",
-		Params: []interface{}{tx, []string{}, []string{wif}},
+		Params: []interface{}{tx, []string{}, wif},
 	})
 	if err != nil {
 		return newFutureError(err)
