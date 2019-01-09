@@ -9,6 +9,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
+	l "log"
 
 	"github.com/btcsuite/btcd/btcjson"
 	"github.com/btcsuite/btcd/chaincfg/chainhash"
@@ -308,6 +309,7 @@ func (r FutureSignRawTransactionResult) Receive() (string, bool, error) {
 	if err != nil {
 		return "", false, err
 	}
+	l.Printf("Recieved data: %s", string(res))
 
 	// Unmarshal as a signrawtransaction result.
 	var signRawTxResult btcjson.SignRawTransactionResult
