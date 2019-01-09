@@ -382,7 +382,7 @@ func (c *Client) SignRawTransaction2Async(tx *wire.MsgTx, inputs []btcjson.RawTx
 	if tx != nil {
 		// Serialize the transaction and convert to hex string.
 		buf := bytes.NewBuffer(make([]byte, 0, tx.SerializeSize()))
-		if err := tx.Serialize(buf); err != nil {
+		if err := tx.SerializeNoWitness(buf); err != nil {
 			return newFutureError(err)
 		}
 		txHex = hex.EncodeToString(buf.Bytes())
@@ -419,7 +419,7 @@ func (c *Client) SignRawTransaction3Async(tx *wire.MsgTx,
 	if tx != nil {
 		// Serialize the transaction and convert to hex string.
 		buf := bytes.NewBuffer(make([]byte, 0, tx.SerializeSize()))
-		if err := tx.Serialize(buf); err != nil {
+		if err := tx.SerializeNoWitness(buf); err != nil {
 			return newFutureError(err)
 		}
 		txHex = hex.EncodeToString(buf.Bytes())
@@ -467,7 +467,7 @@ func (c *Client) SignRawTransaction4Async(tx *wire.MsgTx,
 	if tx != nil {
 		// Serialize the transaction and convert to hex string.
 		buf := bytes.NewBuffer(make([]byte, 0, tx.SerializeSize()))
-		if err := tx.Serialize(buf); err != nil {
+		if err := tx.SerializeNoWitness(buf); err != nil {
 			return newFutureError(err)
 		}
 		txHex = hex.EncodeToString(buf.Bytes())
