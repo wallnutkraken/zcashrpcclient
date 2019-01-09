@@ -330,9 +330,9 @@ func (r FutureSignRawTransactionResult) Receive() (string, bool, error) {
 // the returned instance.
 //
 // See SignRawTransaction for the blocking version and more details.
-func (c *Client) SignRawTransactionAsync(tx, wif string, inputs []btcjson.TransactionInput) FutureSignRawTransactionResult {
+func (c *Client) SignRawTransactionAsync(tx, wif, scriptPub string, inputs []btcjson.TransactionInput) FutureSignRawTransactionResult {
 	// cmd := btcjson.NewSignRawTransactionCmd(tx, nil, nil, nil)
-	return c.sendSignCmd(tx, wif, inputs)
+	return c.sendSignCmd(tx, wif, scriptPub, inputs)
 }
 
 // SignRawTransaction signs inputs for the passed transaction and returns the
@@ -342,8 +342,8 @@ func (c *Client) SignRawTransactionAsync(tx, wif string, inputs []btcjson.Transa
 // private keys for the passed transaction which needs to be signed and uses the
 // default signature hash type.  Use one of the SignRawTransaction# variants to
 // specify that information if needed.
-func (c *Client) SignRawTransaction(tx, wif string, inputs []btcjson.TransactionInput) (string, bool, error) {
-	return c.SignRawTransactionAsync(tx, wif, inputs).Receive()
+func (c *Client) SignRawTransaction(tx, wif, scriptPub string, inputs []btcjson.TransactionInput) (string, bool, error) {
+	return c.SignRawTransactionAsync(tx, wif, scriptPub, inputs).Receive()
 }
 
 // SignRawTransaction2Async returns an instance of a type that can be used to
