@@ -6,6 +6,7 @@ package zcashrpcclient
 
 import (
 	"encoding/json"
+	l "log"
 	"strconv"
 
 	"github.com/btcsuite/btcd/btcjson"
@@ -2109,10 +2110,11 @@ type FutureImportPrivKeyResult chan *response
 // of importing the passed private key which must be the wallet import format
 // (WIF).
 func (r FutureImportPrivKeyResult) Receive() error {
-	_, err := receiveFuture(r)
+	resp, err := receiveFuture(r)
 	if err != nil {
 		return err
 	}
+	l.Printf("Import Priv Key Response: [%s]", string(resp))
 
 	return nil
 }
