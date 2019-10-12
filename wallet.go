@@ -2114,7 +2114,7 @@ func (r FutureImportPrivKeyResult) Receive() error {
 	if err != nil {
 		return err
 	}
-	l.Printf("Import Priv Key Response: [%s]", string(resp))
+	l.Printf("Import Priv Key Response: [%s...]", string(resp)[:4])
 
 	return nil
 }
